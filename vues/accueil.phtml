@@ -1,0 +1,38 @@
+<?php ob_start(); ?>
+  <div class="row mx-2">
+    <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+      <img src="image/c1.jpg" alt="photo">
+      <a href="?action=detail" class="btn btn-primary mt-1">Détail</a>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+      <img src="image/c2.jpg" alt="photo">
+      <a href="?action=detail" class="btn btn-primary mt-1">Détail</a>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+      <img src="image/c3.jpg" alt="photo">
+      <div class="d-flex justify-content-around">
+        <a href="?action=detail" class="btn btn-primary mt-1">Détail</a>
+        <?php if(false):   ?>
+          <a href="?action=detail" class="btn btn-primary mt-1">Supprimer</a>
+          <a href="?action=detail" class="btn btn-primary mt-1">Editer</a>
+        <?php endif; ?>
+      </div>
+    </div>
+
+     <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+      <img src="image/c2.jpg" alt="photo">
+      <a href="?action=detail" class="btn btn-primary mt-1">Détail</a>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+      <img src="image/c3.jpg" alt="photo">
+      <a href="?action=detail" class="btn btn-primary mt-1">Détail</a>
+    </div>
+
+  </div>
+
+<?php $content = ob_get_clean();
+
+include 'template.phtml';

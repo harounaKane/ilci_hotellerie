@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="">
+  <title>Hôtellerie</title>
+</head>
+<body>
+  <header class="bg-secondary p-3 text-center mb-5">
+    <a href="index.php"><h1>Bienvenue sur notre site</h1></a>
+    <nav class="navbar navbar-dark">
+      <!-- ADMIN & RECEPTIONNISTE -->
+      <a class="text-white" href="?action=connexion">Se connecter </a>
+      <a class="text-white" href="">Se déconnecter </a>
+      <a class="text-white" href="">Toutes les réservations </a>
+      <!-- ADMIN -->
+      <a class="text-white" href="?action=ajouter">Ajouter </a>
+    </nav>
+  </header>
+  <main class="container-fluid">
+    <?= $content; ?>
+  </main>
+  <footer class="bg-secondary p-3 text-center mt-3">
+    &copy; - Hôtellerie - ILCI
+  </footer>
+
+</body>
+</html>
