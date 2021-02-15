@@ -19,3 +19,7 @@ if( isset($_GET['action']) ){
 }else{
   include 'vues/accueil.phtml';
 }
+
+if( isset($_POST['reserver']) ) {
+  echo "reservation OK";
+}
