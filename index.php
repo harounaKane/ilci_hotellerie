@@ -23,3 +23,29 @@ if( isset($_GET['action']) ){
 if( isset($_POST['reserver']) ) {
   echo "reservation OK";
 }
+
+if( !empty($_POST['login']) ){
+  $login = $_POST['login'];
+  $mdp = $_POST['mdp'];
+
+  $query = "SELECT * FROM personnel WHERE login = :login AND mot_de_passe = :mdp";
+  var_dump($query);
+
+  $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
+
+  $result = $pdo->prepare($query);
+
+  $result->execute(["login" => $login, "mdp" => $mdp]);
+  var_dump($result);
+
+  $res = $result->fetch();
+
+  var_dump($res);
+
+}
+
+// function connect(){
+//   $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
+
+//   return $pdo;
+// }

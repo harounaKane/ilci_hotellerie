@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<form action="">
+<form action="" method="post">
   <div class="row">
     <div class="form-group col-12 col-sm-6">
       <label for="">Login</label>
