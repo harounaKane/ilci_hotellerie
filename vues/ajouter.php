@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<form action="">
+<form action="index.php" method="post">
   <div class="row">
     <div class="form-group col-12 col-sm-3">
       <label for="">Prix</label>
@@ -19,14 +19,14 @@
     </div>
     <div class="form-group col-12 col-sm-6">
       <label for="">Image</label>
-      <input type="file" name="login" class="form-control">
+      <input type="file" name="image" class="form-control">
     </div>
     <div class="form-group col-12 col-sm-6">
       <label for="">Description</label>
-      <textarea name="description" class="form-control" cols="30" rows="4"></textarea>
+      <textarea name="description" class="form-control" cols="30" rows="4">Lorem, ipsum dolor sit amet.</textarea>
     </div>
   </div>
   <input type="submit" class="btn btn-primary mt-3">
-</form>
+</form
 <?php $content = ob_get_clean();
 include 'template.phtml';

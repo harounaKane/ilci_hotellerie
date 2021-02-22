@@ -1,17 +1,30 @@
 <?php
 
+session_start();
 
 if( isset($_GET['action']) ){
   $action = $_GET['action'];
 
   if( $action == 'detail' ){
     include 'vues/chambre.php';
+
   }else if($action == "reserver"){
     include 'vues/reserver.php';
+
   }else if($action == "connexion"){
+    if( isset($_SESSION['personnel']) ){
+       header("location: index.php");
+      exit();
+    }
     require 'vues/connexion.php';
+
   }else if($action == "ajouter"){
     include 'vues/ajouter.php';
+
+  }else if($action == "deconnexion"){
+    session_destroy();
+    header("location: index.php?action=connexion");
+    exit();
   }
   else{
     echo "page 404"; //vue 404
@@ -24,26 +37,52 @@ if( isset($_POST['reserver']) ) {
   echo "reservation OK";
 }
 
-if( !empty($_POST['login']) ){
+if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
   $login = $_POST['login'];
   $mdp = $_POST['mdp'];
 
   $query = "SELECT * FROM personnel WHERE login = :login AND mot_de_passe = :mdp";
-  var_dump($query);
 
   $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
 
   $result = $pdo->prepare($query);
 
   $result->execute(["login" => $login, "mdp" => $mdp]);
-  var_dump($result);
 
-  $res = $result->fetch();
+  if( $result->rowCount() != 0 ){
 
-  var_dump($res);
+    $perso = $result->fetch();
+    $_SESSION['personnel'] = $perso;
+
+    header("location: index.php");
+    exit();
+  }
 
 }
 
+//ajout de chambre
+if( !empty($_POST['prix']) ){
+  $query = "INSERT INTO chambre VALUES(null, :prix, :superficie, :lit, :perso, :img, :descrip)";
+  $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
+
+  $insert = $pdo->prepare($query);
+
+  $insert->execute([
+    "prix"     => $_POST['prix'],
+    "superficie" => $_POST['superficie'],
+    "lit"     => $_POST['lits'],
+    "perso"     => $_POST['personnes'],
+    "img"     => "mon image",
+    "descrip"     => $_POST['description']
+  ]);
+
+  if($insert){
+    echo "Insertion réussie";
+  }else{
+    echo "erreur";
+  }
+
+}
 // function connect(){
 //   $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
 
