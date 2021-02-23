@@ -12,18 +12,23 @@
   <header class="bg-secondary p-3 text-center mb-5">
     <a href="index.php"><h1>Bienvenue sur notre site</h1></a>
     <nav class="navbar navbar-dark">
+      <!-- on teste si la session existe -->
      <?php if(isset($_SESSION['personnel'])): ?>
         <a class="text-white" href="index.php?action=deconnexion">Se déconnecter </a>
        <!-- ADMIN & RECEPTIONNISTE -->
-        <?php if($_SESSION['personnel']['role'] == "receptionniste"): ?>
+        <?php if($_SESSION['personnel']['role'] == "receptionniste" || $_SESSION['personnel']['role'] == "admin"): ?>
           <a class="text-white" href="">Toutes les réservations </a>
-        <?php else: ?>
+        <?php endif; ?>
+
+        <?php if($_SESSION['personnel']['role'] == "admin" ) : ?>
           <!-- ADMIN -->
           <a class="text-white" href="index.php?action=ajouter">Ajouter </a>
         <?php endif; ?>
+
       <?php else: ?>
         <a class="text-white" href="index.php?action=connexion">Se connecter </a>
     <?php endif; ?>
+
     </nav>
   </header>
   <main class="container-fluid">

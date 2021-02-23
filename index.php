@@ -62,7 +62,23 @@ if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
 
 //ajout de chambre
 if( !empty($_POST['prix']) ){
+
+  $nomImage = "nom_par_défaut";
+
+  if( $_FILES['image']['error'] == 0 ){
+    $infoImage = pathinfo( $_FILES['image']['name'] );
+
+    $extensions = ["jpg", "jpeg", "gif", "png"];
+
+    if( in_array($infoImage['extension'], $extensions) && $_FILES['image']['size'] <= 1500000 ){
+
+      $nomImage = $infoImage['basename'];
+      move_uploaded_file($_FILES['image']['tmp_name'], "image/".$infoImage['basename']);
+    }
+  }
+
   $query = "INSERT INTO chambre VALUES(null, :prix, :superficie, :lit, :perso, :img, :descrip)";
+
   $pdo = new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
 
   $insert = $pdo->prepare($query);
@@ -72,7 +88,7 @@ if( !empty($_POST['prix']) ){
     "superficie" => $_POST['superficie'],
     "lit"     => $_POST['lits'],
     "perso"     => $_POST['personnes'],
-    "img"     => "mon image",
+    "img"     => $nomImage,
     "descrip"     => $_POST['description']
   ]);
 

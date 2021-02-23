@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<form action="index.php" method="post">
+<form action="index.php" method="post" enctype="multipart/form-data">
   <div class="row">
     <div class="form-group col-12 col-sm-3">
       <label for="">Prix</label>
