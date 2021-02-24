@@ -28,7 +28,14 @@ if( isset($_GET['action']) ){
     session_destroy();
     header("location: index.php?action=connexion");
     exit();
+
+  }elseif( $action == "delete" ){
+    delete($_GET['idChambre']);
+
+  }elseif ( $action == "update" ) {
+    update($_GET['idChambre']);
   }
+
   else{
     echo "page 404"; //vue 404
   }
@@ -50,5 +57,5 @@ if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
 
 //ajout de chambre
 if( !empty($_POST['prix']) ){
-  addRoom($_POST, $_FILES);
+  addRoom();
 }

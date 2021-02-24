@@ -55,7 +55,7 @@ function addRoom(){
   ]);
 
   if($insert){
-    echo "Insertion réussie";
+    header("location: .");
   }else{
     echo "erreur";
   }
@@ -69,4 +69,42 @@ function listeChambre(){
   $query->execute();
 
   return $query->fetchAll();
+}
+
+
+function delete($id){
+  $query = pdo()->prepare("DELETE FROM chambre WHERE numChambre = ?");
+  $query->execute(array($id));
+
+  if( $query->rowCount() ){
+    $_SESSION['message'] = "La suppression a réussie";
+  }else{
+    $_SESSION['message'] = "La suppression a échoué";
+  }
+  header("location: .");
+
+}
+
+
+function update($id){
+  $query = "UPDATE chambre
+            SET prix = :prix,
+                superficie = :sup,
+                nbreLits = :lit,
+                nbrePer = :perso,
+                image = :img,
+                description = :descript
+            WHERE numChambre = :idChambre";
+
+  $query = pdo()->prepare($query);
+
+  // $query->execute([
+  //                   "prix"       =>,
+  //                   "sup"        =>,
+  //                   "lit"        =>,
+  //                   "perso"      =>,
+  //                   "img"        =>,
+  //                   "descrit"    =>,
+  //                   "idChambre"  =>
+  //                 ]);
 }

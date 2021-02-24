@@ -14,16 +14,20 @@
         </div>
 
         <div class="col-md-9">
-            <div class="row">
+          <div class="row">
 
-                <?php foreach ($chambres as $key => $value): ?>
-                    <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
-                        <img src="image/<?= $value['image'] ?>"  alt="photo">
-                        <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">Détail</a>
-                    </div>
-                <?php endforeach; ?>
+            <?php foreach ($chambres as $key => $value): ?>
+              <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
+                <img src="image/<?= $value['image'] ?>"  alt="photo">
+                <div class="text-center">
+                  <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">Détail</a>
+                  <a href="index.php?action=delete&idChambre=<?= $value['numChambre'] ?>" class="btn btn-danger mt-1">Delete</a>
+                  <a href="index.php?action=update&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">Update</a>
+                </div>
+              </div>
+            <?php endforeach; ?>
 
-            </div>
+          </div>
         </div>
     </div>
 
