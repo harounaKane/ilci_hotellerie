@@ -2,7 +2,10 @@
 
 
 function pdo(){
- return new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "");
+ return new PDO("mysql:host=localhost;dbname=ilci_hotellerie", "root", "", [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+ ]);
 }
 
 function connexion($login, $mdp){
@@ -17,6 +20,8 @@ function connexion($login, $mdp){
 
     $perso = $result->fetch();
     $_SESSION['personnel'] = $perso;
+
+    setcookie("login", $perso['login'], time()+365*24*3600, '/', '', true, true);
 
     header("location: index.php");
     exit();
@@ -73,8 +78,15 @@ function listeChambre(){
 
 
 function delete($id){
+
   $query = pdo()->prepare("DELETE FROM chambre WHERE numChambre = ?");
   $query->execute(array($id));
+
+  $fichier_sup = "image/".$_GET['imgChambre'];
+
+  if( file_exists($fichier_sup) ){
+    unlink($fichier_sup);
+  }
 
   if( $query->rowCount() ){
     $_SESSION['message'] = "La suppression a réussie";
@@ -86,25 +98,34 @@ function delete($id){
 }
 
 
-function update($id){
+function getChambre($id){
+  $query = pdo()->prepare("SELECT * FROM chambre WHERE numChambre = ?");
+  $query->execute([$id]);
+
+  return $query->fetch();
+}
+
+
+function update(){
+
   $query = "UPDATE chambre
             SET prix = :prix,
                 superficie = :sup,
                 nbreLits = :lit,
-                nbrePer = :perso,
+                nbrePers = :perso,
                 image = :img,
                 description = :descript
             WHERE numChambre = :idChambre";
 
   $query = pdo()->prepare($query);
 
-  // $query->execute([
-  //                   "prix"       =>,
-  //                   "sup"        =>,
-  //                   "lit"        =>,
-  //                   "perso"      =>,
-  //                   "img"        =>,
-  //                   "descrit"    =>,
-  //                   "idChambre"  =>
-  //                 ]);
+  $query->execute([
+                    "prix"      => $_POST['prix'],
+                    "sup"       => $_POST['superficie'],
+                    "lit"       => $_POST['lits'],
+                    "perso"     => $_POST['personnes'],
+                    "img"       => $_POST['image_actuelle'],
+                    "descript"  => $_POST['description'],
+                    "idChambre" => $_POST['numRoom']
+                  ]);
 }

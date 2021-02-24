@@ -33,7 +33,9 @@ if( isset($_GET['action']) ){
     delete($_GET['idChambre']);
 
   }elseif ( $action == "update" ) {
-    update($_GET['idChambre']);
+    $chambre = getChambre($_GET['idChambre']);
+    include "vues/ajouter.php";
+    //update($_GET['idChambre']);
   }
 
   else{
@@ -56,6 +58,10 @@ if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
 }
 
 //ajout de chambre
-if( !empty($_POST['prix']) ){
+if( !empty($_POST['prix']) && isset($_POST['ajouter']) ){
   addRoom();
+}
+
+if( !empty($_POST['prix']) && isset($_POST['update']) ){
+  update();
 }

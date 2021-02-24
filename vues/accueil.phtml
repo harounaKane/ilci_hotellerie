@@ -20,9 +20,19 @@
               <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
                 <img src="image/<?= $value['image'] ?>"  alt="photo">
                 <div class="text-center">
-                  <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">Détail</a>
-                  <a href="index.php?action=delete&idChambre=<?= $value['numChambre'] ?>" class="btn btn-danger mt-1">Delete</a>
-                  <a href="index.php?action=update&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">Update</a>
+                  <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>" class="  btn btn-primary mt-1">
+                    Détail
+                  </a>
+                  <?php if(isset($_SESSION['personnel'])): ?>
+                    <?php if($_SESSION['personnel']['role'] == "admin"): ?>
+                      <a href="index.php?action=delete&idChambre=<?= $value['numChambre'] ?>&imgChambre=<?= $value['image'] ?>" class="btn btn-danger mt-1">
+                      Delete
+                      </a>
+                      <a href="index.php?action=update&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">
+                      Update
+                    </a>
+                    <?php endif; ?>
+                  <?php endif; ?>
                 </div>
               </div>
             <?php endforeach; ?>
