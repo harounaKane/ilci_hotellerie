@@ -22,6 +22,11 @@ if (form && champs) {
         //réactivation du champs date fin
         date_fin.disabled = false;
         date_fin.min = date_debut.value;
+
+        date_fin.addEventListener('change', () => {
+            let jours = nbJours(date_debut.value, date_fin.value);
+             byId('prix').innerHTML = byId('prixChambre').value*jours+"€";
+        });
     });
 
     for (let i = 0; i < champs.length; i++) {
@@ -70,4 +75,12 @@ function selecteur(identifiant) {
 
 function byId(id) {
     return document.getElementById(id);
+}
+
+
+function nbJours(d1, d2){
+    let debut = new Date(d1);
+    let fin = new Date(d2);
+    return (fin-debut)/(24*60*60*1000)+1;
+
 }

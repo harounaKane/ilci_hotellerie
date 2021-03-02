@@ -20,12 +20,12 @@
               <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
                 <img src="image/<?= $value['image'] ?>"  alt="photo">
                 <div class="text-center">
-                  <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>" class="  btn btn-primary mt-1">
+                  <a href="?action=detail&idChambre=<?= $value['numChambre'] ?>&prix=<?= $value['prix'] ?>" class="  btn btn-primary mt-1">
                     Détail
                   </a>
                   <?php if(isset($_SESSION['personnel'])): ?>
                     <?php if($_SESSION['personnel']['role'] == "admin"): ?>
-                      <a href="index.php?action=delete&idChambre=<?= $value['numChambre'] ?>&imgChambre=<?= $value['image'] ?>" class="btn btn-danger mt-1">
+                      <a href="index.php?action=delete&idChambre=<?= $value['numChambre'] ?>&imgChambre=<?= $value['image'] ?>" class="btn btn-danger mt-1" id="supprimer" >
                       Delete
                       </a>
                       <a href="index.php?action=update&idChambre=<?= $value['numChambre'] ?>" class="btn btn-primary mt-1">
@@ -40,6 +40,17 @@
           </div>
         </div>
     </div>
+
+    <script>
+      document.getElementById("supprimer").addEventListener('click', (e) => {
+
+        if ( !confirm("vous êtes sûr de vouloir ... ?") ){
+              e.preventDefault();
+        }
+
+      });
+
+    </script>
 
 <?php $content = ob_get_clean();
 

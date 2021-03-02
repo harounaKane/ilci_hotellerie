@@ -2,6 +2,8 @@
 
   <h2 class="text-center">Réservation</h2>
   <form action="" method="post" id="formReserver" novalidate>
+    <input type="hidden" value="<?= $_GET['chambre'] ?>" name="idChambre">
+    <input type="hidden" value="<?= $_GET['prix'] ?>" id="prixChambre">
     <div class="row">
       <div class="form-group col-12 col-sm-6">
         <label for="">Nom</label>
@@ -42,15 +44,18 @@
     <div class="row">
       <div class="form-group col-12 col-sm-6">
         <label for="">Date arrivée</label>
-        <input type="date" class="form-control" required min="<?= date('Y-m-d') ?>" id="date_debut">
+        <input type="date" class="form-control" required min="<?= date('Y-m-d') ?>" id="date_debut" name="date_debut">
       </div>
       <div class="form-group col-12 col-sm-6">
         <label for="">Date départ</label>
-        <input type="date" class="form-control" required min="" id="date_fin" disabled>
+        <input type="date" class="form-control" required min="" id="date_fin" disabled name="date_fin">
       </div>
     </div>
     <input type="submit" class="btn btn-primary mt-2" name="reserver" >
   </form>
+
+  <div id="prix"></div>
+
 
 <?php $content = ob_get_clean();
 

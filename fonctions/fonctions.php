@@ -70,7 +70,7 @@ function addRoom(){
 
 function listeChambre(){
 
-  $query = pdo()->prepare('SELECT numChambre, image FROM chambre');
+  $query = pdo()->prepare('SELECT numChambre, image, prix FROM chambre');
   $query->execute();
 
   return $query->fetchAll();

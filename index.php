@@ -4,6 +4,46 @@ session_start();
 
 include "fonctions/fonctions.php";
 
+if( isset($_POST['nom']) ) {
+  $query = "INSERT INTO client VALUES(Null, :nom, :prenom, :tel, :adresse, :cp, :ville, :mail )";
+  $connexion = pdo();
+  $statement = $connexion->prepare($query);
+  $statement->execute([
+                      "nom" => $_POST['nom'],
+                      "prenom" => $_POST['prenom'],
+                      "tel" => $_POST['telephone'],
+                      "adresse" => $_POST["adresse"],
+                      "cp" => $_POST['cp'],
+                      "ville" => $_POST['ville'],
+                      "mail" => $_POST['mail']
+                    ]);
+
+  $id_client = $connexion->lastInsertId();
+  // var_dump($id_client);
+  $query = "INSERT INTO reserver VALUES(?, ?, ?, ?)";
+  $statement = $connexion->prepare($query);
+  $statement->execute(array($id_client, $_POST['idChambre'], $_POST['date_debut'], $_POST['date_fin']) );
+
+  header("location: index.php");
+  exit;
+}
+
+if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
+  $login = $_POST['login'];
+  $mdp = $_POST['mdp'];
+
+  connexion($login, $mdp);
+}
+
+//ajout de chambre
+if( !empty($_POST['prix']) && isset($_POST['ajouter']) ){
+  addRoom();
+}
+
+if( !empty($_POST['prix']) && isset($_POST['update']) ){
+  update();
+}
+
 if( isset($_GET['action']) ){
   $action = $_GET['action'];
 
@@ -44,24 +84,4 @@ if( isset($_GET['action']) ){
 }else{
   $chambres = listeChambre();
   include 'vues/accueil.phtml';
-}
-
-if( isset($_POST['reserver']) ) {
-  echo "reservation OK";
-}
-
-if( !empty($_POST['login']) && !empty($_POST['mdp'])  ){
-  $login = $_POST['login'];
-  $mdp = $_POST['mdp'];
-
-  connexion($login, $mdp);
-}
-
-//ajout de chambre
-if( !empty($_POST['prix']) && isset($_POST['ajouter']) ){
-  addRoom();
-}
-
-if( !empty($_POST['prix']) && isset($_POST['update']) ){
-  update();
 }
